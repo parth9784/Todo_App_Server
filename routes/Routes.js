@@ -1,5 +1,5 @@
 const express=require("express")
-const { login, signup } = require("../controllers/Auth");
+const { login, signup, forgotpassword, Update_Password } = require("../controllers/Auth");
 const { createtodo } = require("../controllers/Createtodo");
 const route=express.Router()
 const { Authmid }=require("../middlewares/Authmid");
@@ -13,6 +13,6 @@ route.post("/createtodo",Authmid,createtodo)
 route.get("/gettodo",Authmid,get_todo)
 route.patch("/getdone",Authmid,get_done)
 route.delete("/deletetodo",Authmid,delete_Todo)
-
-
+route.post("/forgot",forgotpassword)
+route.post("/passchange",Update_Password)
 module.exports=route;

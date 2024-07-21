@@ -80,6 +80,39 @@ async function login(req, res) {
     }
 }
 
-module.exports = { login, signup };
+async function Update_Password(req, res) {
+    try {
+        const { email, pass } = req.body;
+        const data = await user.findOne({ email });
+        if (!data) {
+            return res.status(404).json({ msg: "User not found" });
+        }
+        data.password = await bcrypt.hash(pass, 10);
+        await data.save();
+        res.status(200).json({ msg: "Password Changed Successfully.." });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ msg: "Update Password me dikkat h..." });
+    }
+}
+
+
+async function forgotpassword(req, res) {
+    try {
+        const { email } = req.body;
+        const data = await user.findOne({ email });
+        if (!data) {
+            return res.status(400).json({ msg: "Register First...." });
+        }
+        res.status(200).json({ msg: "User Found may Proceed to reset password.." });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ msg: "Forgot Password me dikkat h..." });
+    }
+}
+
+
+
+module.exports = { login, signup,forgotpassword,Update_Password};
 
 
